@@ -1,0 +1,35 @@
+pipeline:
+  name: dbdevops-tidbits-rollback
+  identifier: dbdevopstidbitsrollback
+  projectIdentifier: <YOUR_PROJECT_ID>
+  orgIdentifier: <YOUR_ORG_ID>
+  tags: {}
+  stages:
+    - stage:
+        name: Rollback
+        identifier: Rollback
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - stepGroup:
+                  name: rollback
+                  identifier: rollback
+                  steps:
+                    - step:
+                        type: DBSchemaRollback
+                        name: Rollback Schema
+                        identifier: Rollback_Schema
+                        spec:
+                          connectorRef: <YOUR_DOCKER_CONNECTOR>
+                          migrationType: Liquibase
+                          dbSchema: <YOUR_DATABASE_SCHEMA_ID>
+                          dbInstance: <YOUR_DATABASE_INSTANCE_ID>
+                          tag: <+input>
+                        timeout: 10m
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: <+input>
+        tags: {}

@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - includeAll:
+      path: sql
+      relativeToChangelogFile: true
+      
+  # - changeSet:
+  #     id: add-discount-percentage
+  #     author: nida
+  #     changes:
+  #       - addColumn:
+  #           tableName: products
+  #           columns:
+  #             - column:
+  #                 name: discount_percentage
+  #                 type: DECIMAL(5,2)
+
+  # - changeSet:
+  #     id: change-price-to-float
+  #     author: nida
+  #     changes:
+  #       - modifyDataType:
+  #           tableName: products
+  #           columnName: price
+  #           newDataType: FLOAT
+  #     rollback:
+  #       - modifyDataType:
+  #           tableName: products
+  #           columnName: price
+  #           newDataType: DECIMAL(10,2)

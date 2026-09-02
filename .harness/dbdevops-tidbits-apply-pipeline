@@ -1,0 +1,34 @@
+pipeline:
+  name: dbdevops-tidbits-apply
+  identifier: dbdevopstidbitsapply
+  projectIdentifier: <YOUR_PROJECT_ID>
+  orgIdentifier: <YOUR_ORG_ID>
+  tags: {}
+  stages:
+    - stage:
+        name: apply
+        identifier: apply
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - stepGroup:
+                  name: apply
+                  identifier: apply
+                  steps:
+                    - step:
+                        type: DBSchemaApply
+                        name: Apply Schema
+                        identifier: Apply_Schema
+                        spec:
+                          connectorRef: <YOUR_DOCKER_CONNECTOR>
+                          migrationType: Liquibase
+                          dbSchema: <YOUR_DATABASE_SCHEMA_ID>
+                          dbInstance: <YOUR_DATABASE_INSTANCE_ID>
+                        timeout: 10m
+                  stepGroupInfra:
+                    type: KubernetesDirect
+                    spec:
+                      connectorRef: <+input>
+        tags: {}
